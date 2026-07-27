@@ -21,8 +21,8 @@ BASE_URL = os.environ.get("BASE_URL", "http://localhost:5001")
 DB_PATH = os.path.join(os.path.dirname(__file__), "attendance.db")
 
 # Hardcoded admin account — change the password below before deploying.
-ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD_HASH = generate_password_hash("admin123", method="pbkdf2:sha256")
+ADMIN_USERNAME = "gertrudemonic"
+ADMIN_PASSWORD_HASH = generate_password_hash("Fluffdobby25", method="pbkdf2:sha256")
 
 
 def get_db():
