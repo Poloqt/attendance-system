@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page-center">
+    <div class="card card--narrow">
+      <div class="brand-mark">
+        <div class="badge">QR</div>
+        <span class="name">AttendTrack</span>
+      </div>
+
+
+      <span class="eyebrow" style="text-align:center; display:block;">Admin access</span>
+      <h1 style="text-align:center;">Sign in</h1>
+      <p class="subtitle" style="text-align:center;">Manage members and meeting minutes.</p>
+
+
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+            <div class="flash">{{ message }}</div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+
+      <form method="POST">
+        <div class="field">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="admin" required autofocus>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="••••••••" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Log in</button>
+      </form>
+  <div class="footer-note">
+        <a href="{{ url_for('main') }}">&larr; Back to check-in page</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
