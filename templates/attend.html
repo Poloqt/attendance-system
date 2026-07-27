@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meeting Check-In</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page-center">
+    <div class="card card--wide" style="text-align:center;">
+      <div class="brand-mark">
+        <div class="badge">QR</div>
+        <span class="name">AttendTrack</span>
+      </div>
+
+
+      {% if checked_in %}
+        <div class="checkin-success">
+          <span class="icon">&#10003;</span>
+          <span>You're checked in</span>
+        </div>
+        <p class="subtitle">Welcome, <strong>{{ member.name }}</strong>. Here are the minutes of the meeting.</p>
+
+
+        <span class="meeting-chip">{{ meeting.date }}</span>
+        <h1 style="margin-top:8px;">{{ meeting.title }}</h1>
+
+
+        <div class="minutes-panel">
+          <h3>Minutes of the Meeting</h3>
+          <div class="minutes-text">{{ meeting.minutes }}</div>
+        </div>
+      {% else %}
+        <span class="eyebrow">Attendance check-in</span>
+        <h1>{{ meeting.title }}</h1>
+        <p class="subtitle">{{ meeting.date }} &middot; Select your name below to mark your attendance.</p>
+{% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <div class="flash">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+
+        <form method="POST" style="text-align:left;">
+          <div class="field">
+            <label for="member_id">Your name</label>
+            <select id="member_id" name="member_id" required>
+              <option value="" disabled selected>Select your name&hellip;</option>
+              {% for member in members %}
+                <option value="{{ member.id }}">{{ member.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Check In</button>
+        </form>
+
+
+        {% if not members %}
+          <p class="footer-note">No members have been added yet. Ask the admin to add members first.</p>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</body>
+</html>
