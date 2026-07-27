@@ -1,1 +1,4 @@
-
+flask
+qrcode[pil]
+werkzeug
+gunicorn
