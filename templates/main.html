@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Check-In</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="page-center">
+    <div class="card card--narrow" style="text-align:center;">
+      <div class="brand-mark">
+        <div class="badge">QR</div>
+        <span class="name">AttendTrack</span>
+      </div>
+
+
+      <span class="eyebrow">Scan to check in</span>
+      <h1>{{ meeting.title }}</h1>
+      <p class="subtitle">{{ meeting.date }}</p>
+
+
+      <div class="qr-frame">
+        <img src="{{ url_for('qr_code') }}" alt="Attendance QR Code">
+      </div>
+
+
+      <p class="subtitle" style="margin-bottom:0;">
+        Open your phone's camera, scan the code, select your name, and the meeting minutes will appear instantly.
+      </p>
+
+
+      <div class="footer-note">
+ <a href="{{ url_for('login') }}">Admin login</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
