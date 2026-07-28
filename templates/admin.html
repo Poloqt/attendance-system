@@ -47,7 +47,7 @@
         </form>
 
         <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">
-          <a href="{{ url_for('export_meeting', meeting_id=meeting.id) }}" class="btn btn-secondary btn-small">⬇ Export Attendance CSV</a>
+          <a href="{{ url_for('export_meeting', meeting_id=meeting.id) }}" class="btn btn-secondary btn-small">⬇ Download Excel/CSV (Present, Late, Absent)</a>
           <form method="POST" action="{{ url_for('reset_attendance', meeting_id=meeting.id) }}" class="inline-form"
                 onsubmit="return confirm('Reset attendance for this meeting? This cannot be undone.');">
             <button type="submit" class="btn btn-danger btn-small">Reset Attendance</button>
