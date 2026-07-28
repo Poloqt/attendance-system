@@ -25,20 +25,6 @@ ADMIN_USERNAME = "gertrudemonic"
 ADMIN_PASSWORD_HASH = generate_password_hash("Fluffdobby25", method="pbkdf2:sha256")
 
 
-def get_db():
-    if "db" not in g:
-        g.db = sqlite3.connect(DB_PATH)
-        g.db.row_factory = sqlite3.Row
-    return g.db
-
-
-@app.teardown_appcontext
-def close_db(exception=None):
-    db = g.pop("db", None)
-    if db is not None:
-        db.close()
-
-
 def init_db():
     db = sqlite3.connect(DB_PATH)
     db.row_factory = sqlite3.Row
@@ -72,6 +58,109 @@ def init_db():
             ("Team Meeting", datetime.now().strftime("%B %d, %Y"),
              "Minutes of the meeting will appear here once the admin adds them.")
         )
+
+    # Seed the member list every time the app starts, since the
+    # database resets on Render's free tier when the app restarts.
+    default_members = [
+        "Abril, Mary Margarette B.",
+        "Alday, Rogel Victor L.",
+        "Alinea, Maria Nhelyn A.",
+        "Añabieza, Paul Vincent P.",
+        "Arellano, Lara Jhane A.",
+        "Bonita, Eureem Clyde M.",
+        "Conopio, John Denver NA",
+        "Contreras, Marion Kyle",
+        "Cortez, Carmela Joy B.",
+        "Daileg, Nayeli Erica C.",
+        "De Luna, Andrea Bianca P.",
+        "De Luna, Christine Anne, P.",
+        "De Pasion, Darren Mae F.",
+        "De Villa, Reign Jhudiel O.",
+        "Delfin, Earl Jan L.",
+        "Dizon, Faustina Maryella R.",
+        "Educado, Justine John L.",
+        "Estoya, Jay Em Clark R.",
+        "Famoleras, Princess Zyra T.",
+        "Fortuna, Janeld Han M.",
+        "Fortunato, Arvin Jhon S.",
+        "Gamido, Joiaquin Gabriel U.",
+        "Guevarra, Mary Anne G.",
+        "Jose, Yuan Miguel C.",
+        "Layosa, Iana Eirene R.",
+        "Lazo, Fatima D.",
+        "Lentijas, Jerome P.",
+        "Lorenzo, Jae M.",
+        "Losito, John Dharryl L.",
+        "Loyola, Lance",
+        "Magsisi, Lujelle V.",
+        "Malabanan, Al-jiarro V.",
+        "Maligalig, Curvy Romelson G.",
+        "Manzano, Cloyd Louie M.",
+        "Mendoza, Aliyah Dhana S.",
+        "Mendoza, Chellarie P.",
+        "Mendoza, Christian Laurence S.",
+        "Menguito, Marc Luis C.",
+        "Mortel, Sealthiel Ramos",
+        "Mula, John Jessie M.",
+        "Napoles, Victor Emmanuel A.",
+        "Oñate, Nhil Andrei I.",
+        "Orge, Marian Carmil C.",
+        "Pagaspas, Gertrude Monic, L.",
+        "Parale, Luis Joaquin G.",
+        "Patricio, Russell Francesca C.",
+        "Pelito, Samantha Nina",
+        "Peñafiel, Angelle V.",
+        "Plandez, Mark Xavier",
+        "Revilleza, Aicel, C.",
+        "Rosas, Kiert Hanzel D.",
+        "Rubio, Lannz Angel G.",
+        "Sagaya, Therese Ann Hope B.",
+        "Sanchez, Arwin Jasper Y.",
+        "Santos, Aceyah P.",
+        "Saplala, Maria Nazreen E.",
+        "Satorre, Peters Edward F.",
+        "Supremo, Xyrelle C.",
+        "Tapat, Chris Matthew M.",
+        "Tayaban, Jemimah P.",
+        "Titular, Khim RIezell",
+        "Turla, Dhanalene Angelica B.",
+        "Valencia, Kenneth",
+        "Vallo, Christian Josef P.",
+        "Ventayen, John Carlo P.",
+        "Villamayor, Mark Emanuel K.",
+        "Aguila, Dailyn Rui C.",
+        "Almeda Kaye D.",
+        "Barachina, Aliana Monique",
+        "Canicosa, Arizza, H.",
+        "Datu, Genesis G.",
+        "Decano, Justine R.",
+        "Epino, Nicole Heart A.",
+        "Formaran, Am Kirstin R.",
+        "Francisco, Liwliwa B.",
+        "Garcia, Danielle, E",
+        "Ilagan, Paul Warren J.",
+        "Lentijas, Catherine P.",
+        "Manalang, Jer Maine",
+        "Matoto, Matly L.",
+        "Melendres, Levi Joseph S.",
+        "Ortega, Kyrill James S.",
+        "Quilloy, Lee Robin",
+        "Ramos, Nicole Jasmine",
+        "Rance, Alison P.",
+        "Relos, Jalen Rhudee B.",
+        "Salvador, Eduardo Jose C.",
+        "Sañez, Azel Mae A.",
+        "Teloza, Rosella Mae O.",
+        "Tunay, Christine Gail, D.",
+        "Yalung, Aina Jhynelle B.",
+        "Yapan, Gwyneth Hannah S.",
+        "Evangelio, Zandrix Gabrielle C.",
+        "Semilla, Jethro Kyle M.",
+        "Cuyno, Joaquin Iñigo A.",
+    ]
+    for name in default_members:
+        db.execute("INSERT OR IGNORE INTO members (name) VALUES (?)", (name,))
+
     db.commit()
     db.close()
 
