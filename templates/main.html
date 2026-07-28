@@ -2,43 +2,38 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ meeting.title if meeting else "Attendance System" }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance Check-In</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <div class="container">
-    <div class="top-bar">
-      <h1>📋 Attendance System</h1>
-      <a href="{{ url_for('login') }}" class="btn btn-secondary btn-small">Admin</a>
-    </div>
+  <div class="page-center">
+    <div class="card card--narrow" style="text-align:center;">
+      <div class="brand-mark">
+        <div class="badge">QR</div>
+        <span class="name">AttendTrack</span>
+      </div>
 
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}{% for m in messages %}<div class="flash">{{ m }}</div>{% endfor %}{% endif %}
-    {% endwith %}
 
-    {% if meeting %}
-    <div class="card">
-      <span class="badge badge-active">Active Meeting</span>
-      <h2>{{ meeting.title }}</h2>
-      <p style="color:#6b7280;">{{ meeting.date }}</p>
-      <p>{{ meeting.minutes }}</p>
-      {% if meeting.cutoff_time %}
-        <p style="color:#6b7280; font-size:0.85rem;">Check-in cutoff: {{ meeting.cutoff_time }} (after this, check-ins are marked late)</p>
-      {% endif %}
-    </div>
+      <span class="eyebrow">Scan to check in</span>
+      <h1>{{ meeting.title }}</h1>
+      <p class="subtitle">{{ meeting.date }}</p>
 
-    <div class="card qr-box">
-      <h2>Scan to Check In</h2>
-      <img src="{{ url_for('qr_code') }}" alt="QR code to check in">
-      <p style="color:#6b7280; margin-top:10px;">Or open the link directly:</p>
-      <a href="{{ url_for('attend') }}" class="btn">Go to Check-In Page</a>
+
+      <div class="qr-frame">
+        <img src="{{ url_for('qr_code') }}" alt="Attendance QR Code">
+      </div>
+
+
+      <p class="subtitle" style="margin-bottom:0;">
+        Open your phone's camera, scan the code, select your name, and the meeting minutes will appear instantly.
+      </p>
+
+
+      <div class="footer-note">
+ <a href="{{ url_for('login') }}">Admin login</a>
+      </div>
     </div>
-    {% else %}
-    <div class="card">
-      <p>No active meeting right now. Please check back later or contact the admin.</p>
-    </div>
-    {% endif %}
   </div>
 </body>
 </html>
